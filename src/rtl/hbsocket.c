@@ -173,7 +173,7 @@
 /* #     define HB_HAS_INET6 */
 #  elif defined( __MINGW32__ )
 #     define HB_HAS_SOCKADDR_STORAGE
-#  elif defined( __POCC__ ) && ! defined( __XCC__ )
+#  elif defined( __POCC__ )
 #     define HB_HAS_SOCKADDR_STORAGE
 #  elif defined( _MSC_VER )
 #     if _MSC_VER >= 1800 && ! defined( HB_WINSOCK_USE_OLDFUNC )
@@ -2784,7 +2784,7 @@ int hb_socketSetBlockingIO( HB_SOCKET sd, HB_BOOL fBlocking )
    if( ret != -1 )
    {
       HB_BOOL fBlocked;
-      long flags;
+      int flags;
       fBlocked = ( ret & O_NONBLOCK ) == 0;
       if( fBlocking ? ! fBlocked : fBlocked )
       {

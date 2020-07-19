@@ -32,18 +32,18 @@ _ROOT="$(realpath '.')"
 
 # Don't remove these markers.
 #hashbegin
-export NGHTTP2_VER='1.27.0'
-export NGHTTP2_HASH_32='fe5618f4e615203d029d286bbee4b63839a0f1c4d4d180fd05b01290861528ae'
-export NGHTTP2_HASH_64='8764c7ade8fc5dc718059e8f063fe45c98d1efaa11b5baac56353f63e273d5a4'
+export NGHTTP2_VER='1.28.0'
+export NGHTTP2_HASH_32='794190984bfe74a9206148ab9e40fcf129d42960f636fcccf100b80220c5fdae'
+export NGHTTP2_HASH_64='8f3e41c6b70780f19cfa99b7bf783e6e27023b86248e5336a6aff93bacdd3ff8'
 export OPENSSL_VER='1.1.0g'
-export OPENSSL_HASH_32='d1ea0371f842883630d22036e37425fa99061f85bc6743af438302b1d5ea584a'
-export OPENSSL_HASH_64='763353e627b5983474c1622b5597982dc04fc2adf0d1627a64101ca5782bbaac'
+export OPENSSL_HASH_32='a63004f10cf1010c4d34b523072d750dee3793ed32c11ebc1e5eeb055bf215ac'
+export OPENSSL_HASH_64='283b40f0686625c5c12bd6e8b61a47d166d36456ae24183321b029f8b47478d8'
 export LIBSSH2_VER='1.8.0'
 export LIBSSH2_HASH_32='d7f5845d15cdffa73c0cbfaea309b7865024b9c8392ce55bc35b86d7c245ba5e'
 export LIBSSH2_HASH_64='7390032491b550baeae5c3761b463e07f6104ae10c038aa5bc8a409631e418a7'
-export CURL_VER='7.56.1'
-export CURL_HASH_32='5fd3b330388cd1cee220e49602361ed10edc21ef7d59e53aa6276e520317e826'
-export CURL_HASH_64='f33707b3d1125570029d422bda1023fbe5f4a3eb1cba6aab07d7a9e5b8eec343'
+export CURL_VER='7.57.0'
+export CURL_HASH_32='dbb38f3dc1c00c4bab20c1cc47641aa1b4102548a754b86c0608a8afbb6100cf'
+export CURL_HASH_64='2f4dff926d892ebff0c62b7455dab196a3a4510976965a27fbbd16e02362251d'
 #hashend
 
 # Install/update MSYS2 packages required for completing the build
@@ -212,6 +212,8 @@ if [ "${CC4}" != 'msvc' ]; then
   export HB_DIR_LIBSSH2_64="${HB_RT}/libssh2-mingw64/"
   export HB_DIR_NGHTTP2_32="${HB_RT}/nghttp2-mingw32/"
   export HB_DIR_NGHTTP2_64="${HB_RT}/nghttp2-mingw64/"
+  export HB_DIR_BROTLI_32="${HB_RT}/brotli-mingw32/"
+  export HB_DIR_BROTLI_64="${HB_RT}/brotli-mingw64/"
   export HB_DIR_CURL_32="${HB_RT}/curl-mingw32/"
   export HB_DIR_CURL_64="${HB_RT}/curl-mingw64/"
 
@@ -356,14 +358,14 @@ if [ "${CC4}" = 'msvc' ]; then
   [ "${CC}" = 'msvc2013' ] && _VCVARSALL=' 12.0\VC'
   [ "${CC}" = 'msvc2015' ] && _VCVARSALL=' 14.0\VC'
   # Assume '\<YEAR>\Community\VC\Auxiliary\Build' for anything newer:
-  [ -z "${_VCVARSALL}" ] && _VCVARSALL="\\$(echo "${CC}" | cut -c 5-8)\Community\VC\Auxiliary\Build"
+  [ -z "${_VCVARSALL}" ] && _VCVARSALL="\\$(echo "${CC}" | cut -c 5-8)\\Community\\VC\\Auxiliary\\Build"
 
-  export _VCVARSALL="%ProgramFiles(x86)%\Microsoft Visual Studio${_VCVARSALL}\vcvarsall.bat"
+  export _VCVARSALL="%ProgramFiles(x86)%\\Microsoft Visual Studio${_VCVARSALL}\\vcvarsall.bat"
 
   if [ -n "${_VCVARSALL}" ]; then
     cat << EOF > _make.bat
       call "${_VCVARSALL}" x86
-      C:\msys64\mingw64\bin\mingw32-make.exe install %HB_MKFLAGS% HB_COMPILER=msvc
+      C:\\msys64\\mingw64\\bin\\mingw32-make.exe install %HB_MKFLAGS% HB_COMPILER=msvc
 EOF
     ./_make.bat
     rm _make.bat
@@ -376,7 +378,7 @@ EOF
   if [ -n "${_VCVARSALL}" ]; then
     cat << EOF > _make.bat
       call "${_VCVARSALL}" x86_amd64
-      C:\msys64\mingw64\bin\mingw32-make.exe install %HB_MKFLAGS% HB_COMPILER=msvc64
+      C:\\msys64\\mingw64\\bin\\mingw32-make.exe install %HB_MKFLAGS% HB_COMPILER=msvc64
 EOF
     ./_make.bat
     rm _make.bat
